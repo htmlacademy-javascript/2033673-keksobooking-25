@@ -1,38 +1,20 @@
-const getRandomInteger = (start, stop) => {
-  if (stop < start) {
-    return 'ОШИБКА. Неверно указан диапазон.';
+const getRandomNumber = (begin, end, digits = 0) => {
+
+  if (end < begin) {
+    [begin, end] = [end, begin];
   }
 
-  if (start === stop) {
-    return 'ОШИБКА. Диапазон не может состоять из одного числа.';
+  if (begin < 0) {
+    begin = 0;
   }
 
-  if (start < 0) {
-    return 'ОШИБКА. Возможен только положительный диапазон значений.';
-  }
-
-  return Math.floor(Math.random() * (stop + 1 - start) + start);
-};
-
-const getRandomFloat = (start, stop, digits) => {
-  if (stop < start) {
-    return 'ОШИБКА. Неверно указан диапазон.';
-  }
-
-  if (start === stop) {
-    return 'ОШИБКА. Диапазон не может состоять из одного числа.';
-  }
-
-  if (start < 0) {
-    return 'ОШИБКА. Возможен только положительный диапазон значений.';
+  if (end < 0) {
+    end = 0;
   }
 
   if (digits < 0) {
-    return 'ОШИБКА. Количество знаков после запятой не должно быть отрицательным.';
+    digits = 0;
   }
 
-  return (Math.random() * (stop + 1 / 10 ** digits - start) + start).toFixed(digits);
+  return +(Math.random() * (end + 1 / 10 ** digits - begin) + begin).toFixed(digits);
 };
-
-getRandomInteger(3, 10);
-getRandomFloat(1.24, 7.89, 2);
