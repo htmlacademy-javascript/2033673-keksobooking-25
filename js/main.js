@@ -18,3 +18,28 @@ const getRandomNumber = (begin, end, digits = 0) => {
 
   return +(Math.random() * (end + 1 / 10 ** digits - begin) + begin).toFixed(digits);
 };
+
+const createAdvertisement = () => {
+  return {
+    author: {
+      avatar: '',
+    },
+    offer: {
+      title: '',
+      address: '',
+      price: 0,
+      type: '',
+      rooms: 0,
+      guests: 0,
+      checkin: 0,
+      checkout: 0,
+      features: [],
+      description: '',
+      photos: [],
+    },
+    location: {
+      lat: 0.0,
+      lng: 0.0,
+    }
+  }
+};
