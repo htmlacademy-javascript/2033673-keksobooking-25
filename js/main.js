@@ -1,3 +1,5 @@
+const SIMILAR_ADVERTISEMENTS = 10;
+
 const getRandomNumber = (begin, end, digits = 0) => {
 
   if (end < begin) {
@@ -18,6 +20,11 @@ const getRandomNumber = (begin, end, digits = 0) => {
 
   return +(Math.random() * (end + 1 / 10 ** digits - begin) + begin).toFixed(digits);
 };
+
+const getAvatarImage = () => {
+  const imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS)
+  return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`
+}
 
 const createAdvertisement = () => {
   return {
