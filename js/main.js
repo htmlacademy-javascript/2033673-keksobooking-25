@@ -18,7 +18,7 @@ const getRandomNumber = (begin, end, digits = 0) => {
     digits = 0;
   }
 
-  return +(Math.random() * (end + 1 / 10 ** digits - begin) + begin).toFixed(digits);
+  return +(Math.random() * (end - begin) + begin).toFixed(digits);
 };
 
 const getAvatarImage = () => {
