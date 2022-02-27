@@ -17,6 +17,8 @@ const HI_LNG = 139.80000;
 const DIGITS = 5;
 const LOW_ROOMS = 1;
 const HI_ROOMS = 6;
+const LOW_GUESTS = 1;
+const HI_GUESTS = 10;
 
 const getRandomNumber = (begin, end, digits = 0) => {
 
@@ -54,6 +56,10 @@ const getType = () => {
 
 const getRooms = () => {
   return getRandomNumber(LOW_ROOMS, HI_ROOMS);
+};
+
+const getGuests = () => {
+  return getRandomNumber(LOW_GUESTS, HI_GUESTS);
 };
 
 
