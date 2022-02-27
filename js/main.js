@@ -46,6 +46,12 @@ const getPrice = () => {
   return getRandomNumber(LOW_PRICE, HIGH_PRICE);
 };
 
+const getType = () => {
+  return TYPES[getRandomNumber(0, TYPES.length)]
+}
+
+
+
 const createAdvertisement = () => {
   return {
     author: {
