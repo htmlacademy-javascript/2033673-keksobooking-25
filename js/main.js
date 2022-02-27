@@ -52,21 +52,21 @@ const createAdvertisement = () => {
       avatar: getAvatarImage(),
     },
     offer: {
-      title: '',
-      address: '',
+      title: 'Объявление о сдаче помещения в аренду',
+      address: `${this.location.lat} ${this.location.lng}`,
       price: getRandomNumber(LOW_PRICE, HIGH_PRICE),
       type: TYPES[getRandomNumber(0, TYPES.length)],
       rooms: getRandomNumber(LOW_ROOMS, HI_ROOMS),
       guests: getRandomNumber(LOW_GUESTS, HI_GUESTS),
-      checkin: 0,
-      checkout: 0,
+      checkin: CHECKIN_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length)],
+      checkout: CHECKOUT_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length)],
       features: [],
-      description: '',
+      description: `Помещение по адресу ${this.address} типа ${this.type} из ${this.rooms} комнат сдается в аренду`,
       photos: [],
     },
     location: {
-      lat: 0.0,
-      lng: 0.0,
+      lat: getRandomNumber(LOW_LAT, HI_LAT, DIGITS),
+      lng: getRandomNumber(LOW_LNG, HI_LNG, DIGITS),
     }
   };
 };
