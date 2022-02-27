@@ -15,6 +15,8 @@ const HI_LAT = 35.7000;
 const LOW_LNG = 139.70000;
 const HI_LNG = 139.80000;
 const DIGITS = 5;
+const LOW_ROOMS = 1;
+const HI_ROOMS = 6;
 
 const getRandomNumber = (begin, end, digits = 0) => {
 
@@ -47,9 +49,12 @@ const getPrice = () => {
 };
 
 const getType = () => {
-  return TYPES[getRandomNumber(0, TYPES.length)]
-}
+  return TYPES[getRandomNumber(0, TYPES.length)];
+};
 
+const getRooms = () => {
+  return getRandomNumber(LOW_ROOMS, HI_ROOMS);
+};
 
 
 const createAdvertisement = () => {
