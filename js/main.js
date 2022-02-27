@@ -70,7 +70,7 @@ const createAdvertisement = () => {
       checkin: CHECKIN_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length - 1)],
       checkout: CHECKOUT_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length - 1)],
       features: getRandomList(FEATURES),
-      description: `Помещение по адресу ${this.address} типа ${this.type} из ${this.rooms} комнат сдается в аренду`,
+      description: `Помещение по адресу ${this.address} типа ${this.type} из ${this.rooms} комнат сдается в аренду по цене ${this.price}`,
       photos: getRandomList(PHOTO_PATHS),
     },
     location: {
