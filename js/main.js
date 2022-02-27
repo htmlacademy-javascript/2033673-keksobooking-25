@@ -60,7 +60,7 @@ const createAdvertisement = () => {
   const location = {
     lat: getRandomNumber(LOW_LAT, HI_LAT, DIGITS),
     lng: getRandomNumber(LOW_LNG, HI_LNG, DIGITS),
-  }
+  };
 
   return {
     author: {
@@ -82,3 +82,5 @@ const createAdvertisement = () => {
     location,
   };
 };
+
+Array.from({length: SIMILAR_ADVERTISEMENTS}, createAdvertisement);
