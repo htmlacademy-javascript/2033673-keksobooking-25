@@ -43,7 +43,7 @@ const getRandomNumber = (begin, end, digits = 0) => {
 
 const getAvatarImage = () => {
   const imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS);
-  return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`;
+  return `img/avatars/user${imageNumber < 10 ? `0${imageNumber}` : imageNumber}.png`;
 };
 
 const getRandomList = (array) => {
