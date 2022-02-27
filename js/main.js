@@ -82,3 +82,5 @@ const createAdvertisement = () => {
     location,
   };
 };
+
+Array.from({length:SIMILAR_ADVERTISEMENTS}, createAdvertisement);
