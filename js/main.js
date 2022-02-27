@@ -38,14 +38,18 @@ const getRandomNumber = (begin, end, digits = 0) => {
 };
 
 const getAvatarImage = () => {
-  const imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS)
-  return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`
-}
+  const imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS);
+  return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`;
+};
+
+const getPrice = () => {
+  return getRandomNumber(LOW_PRICE, HIGH_PRICE);
+};
 
 const createAdvertisement = () => {
   return {
     author: {
-      avatar: '',
+      avatar: getAvatarImage(),
     },
     offer: {
       title: '',
@@ -64,5 +68,5 @@ const createAdvertisement = () => {
       lat: 0.0,
       lng: 0.0,
     }
-  }
+  };
 };
