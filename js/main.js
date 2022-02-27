@@ -46,6 +46,15 @@ const getAvatarImage = () => {
   return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`;
 };
 
+const getFeatures = () => {
+  const times = getRandomNumber(1, FEATURES.length - 1);
+  const features = [];
+  for (let i = 0; i < times; i++) {
+    features.push(FEATURES[getRandomNumber(0, FEATURES.length - 1)]);
+  }
+  return [...new Set(features)];
+};
+
 const createAdvertisement = () => {
   return {
     author: {
