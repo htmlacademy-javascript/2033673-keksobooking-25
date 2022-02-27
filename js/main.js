@@ -46,13 +46,13 @@ const getAvatarImage = () => {
   return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`;
 };
 
-const getFeatures = () => {
-  const times = getRandomNumber(1, FEATURES.length - 1);
-  const features = [];
+const getRandomList = (array) => {
+  const times = getRandomNumber(1, array.length - 1);
+  const result = [];
   for (let i = 0; i < times; i++) {
-    features.push(FEATURES[getRandomNumber(0, FEATURES.length - 1)]);
+    result.push(array[getRandomNumber(0, array.length - 1)]);
   }
-  return [...new Set(features)];
+  return [...new Set(result)];
 };
 
 const createAdvertisement = () => {
@@ -69,9 +69,9 @@ const createAdvertisement = () => {
       guests: getRandomNumber(LOW_GUESTS, HI_GUESTS),
       checkin: CHECKIN_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length - 1)],
       checkout: CHECKOUT_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length - 1)],
-      features: [],
+      features: getRandomList(FEATURES),
       description: `Помещение по адресу ${this.address} типа ${this.type} из ${this.rooms} комнат сдается в аренду`,
-      photos: [],
+      photos: getRandomList(PHOTO_PATHS),
     },
     location: {
       lat: getRandomNumber(LOW_LAT, HI_LAT, DIGITS),
