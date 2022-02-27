@@ -46,23 +46,6 @@ const getAvatarImage = () => {
   return `img/avatars/user${imageNumber < 10 ? '0' + imageNumber : imageNumber}.png`;
 };
 
-const getPrice = () => {
-  return getRandomNumber(LOW_PRICE, HIGH_PRICE);
-};
-
-const getType = () => {
-  return TYPES[getRandomNumber(0, TYPES.length)];
-};
-
-const getRooms = () => {
-  return getRandomNumber(LOW_ROOMS, HI_ROOMS);
-};
-
-const getGuests = () => {
-  return getRandomNumber(LOW_GUESTS, HI_GUESTS);
-};
-
-
 const createAdvertisement = () => {
   return {
     author: {
@@ -71,10 +54,10 @@ const createAdvertisement = () => {
     offer: {
       title: '',
       address: '',
-      price: 0,
-      type: '',
-      rooms: 0,
-      guests: 0,
+      price: getRandomNumber(LOW_PRICE, HIGH_PRICE),
+      type: TYPES[getRandomNumber(0, TYPES.length)],
+      rooms: getRandomNumber(LOW_ROOMS, HI_ROOMS),
+      guests: getRandomNumber(LOW_GUESTS, HI_GUESTS),
       checkin: 0,
       checkout: 0,
       features: [],
