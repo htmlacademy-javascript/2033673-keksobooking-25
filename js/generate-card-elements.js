@@ -33,11 +33,16 @@ const addPhotos = (cardElement, paths) => {
   });
 };
 
+const addAvatar = (cartElement, path) => {
+  const avatar = cartElement.querySelector('.popup__avatar');
+  avatar.src = path;
+};
+
 const generateCardElements = (cards) => {
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#card').content.querySelector('.popup');
   cards.forEach(({
-                   avatar,
+                   author: {avatar},
                    offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
                  }) => {
     const cardElement = template.cloneNode(true);
@@ -50,7 +55,7 @@ const generateCardElements = (cards) => {
     addTextContent(cardElement, '.popup__description', description);
     addFeatures(cardElement, features);
     addPhotos(cardElement, photos);
-
+    addAvatar(cardElement, avatar);
 
     fragment.append(cardElement);
   });
