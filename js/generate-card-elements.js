@@ -18,6 +18,9 @@ const generateCardElements = (cards) => {
     addCardContent(cardHTML, '.popup__text--address', address);
     addCardContent(cardHTML, '.popup__text--price', `${ price } \u{20BD}/ночь`);
     addCardContent(cardHTML, '.popup__type', `${ TYPES[type] }`);
+    addCardContent(cardHTML, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`);
+    addCardContent(cardHTML, '.popup__text--time', `Заезд после ${checkin}, выезд до ${checkout}`)
+
 
     fragment.append(cardHTML);
   });
