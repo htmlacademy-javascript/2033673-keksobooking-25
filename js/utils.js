@@ -1,4 +1,4 @@
-import {getSettings} from './settings.js';
+import { getSettings } from './settings.js';
 
 const {SIMILAR_ADVERTISEMENTS} = getSettings();
 
@@ -23,9 +23,16 @@ const getRandomNumber = (begin, end, digits = 0) => {
   return +(Math.random() * (end - begin) + begin).toFixed(digits);
 };
 
-const getAvatarImage = () => {
-  const imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS);
-  return `img/avatars/user${imageNumber < 10 ? `0${imageNumber}` : imageNumber}.png`;
+const generateAvatar = () => {
+  const avatarNumbers = [];
+  let imageNumber;
+  return () => {
+    do {
+      imageNumber = getRandomNumber(1, SIMILAR_ADVERTISEMENTS);
+    } while (avatarNumbers.includes(imageNumber));
+    avatarNumbers.push(imageNumber);
+    return `img/avatars/user${ imageNumber < 10 ? `0${ imageNumber }` : imageNumber }.png`;
+  };
 };
 
 const getRandomList = (array) => {
@@ -37,4 +44,6 @@ const getRandomList = (array) => {
   return [...new Set(result)];
 };
 
-export {getRandomNumber, getAvatarImage, getRandomList};
+const getAvatarImage = generateAvatar();
+
+export { getRandomNumber, getAvatarImage, getRandomList };
