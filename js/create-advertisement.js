@@ -21,6 +21,7 @@ const {
 } = getSettings();
 
 const createAdvertisement = () => {
+  const types = Object.keys(TYPES);
 
   const location = {
     lat: getRandomNumber(LOW_LAT, HI_LAT, DIGITS), lng: getRandomNumber(LOW_LNG, HI_LNG, DIGITS),
@@ -34,7 +35,7 @@ const createAdvertisement = () => {
       title: 'Объявление о сдаче помещения в аренду',
       address: `${location.lat}, ${location.lng}`,
       price: getRandomNumber(LOW_PRICE, HIGH_PRICE),
-      type: TYPES[getRandomNumber(0, TYPES.length - 1)],
+      type: types[getRandomNumber(0, types.length - 1)],
       rooms: getRandomNumber(LOW_ROOMS, HI_ROOMS),
       guests: getRandomNumber(LOW_GUESTS, HI_GUESTS),
       checkin: CHECKIN_TIMES[getRandomNumber(0, CHECKOUT_TIMES.length - 1)],
