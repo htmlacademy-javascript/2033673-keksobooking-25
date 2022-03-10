@@ -42,9 +42,9 @@ const generateCardElements = (cards) => {
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#card').content.querySelector('.popup');
   cards.forEach(({
-                   author: {avatar},
-                   offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
-                 }) => {
+    author: {avatar},
+    offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
+  }) => {
     const cardElement = template.cloneNode(true);
     addTextContent(cardElement, '.popup__title', title);
     addTextContent(cardElement, '.popup__text--address', address);
