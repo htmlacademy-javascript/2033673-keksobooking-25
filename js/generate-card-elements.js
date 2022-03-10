@@ -6,6 +6,10 @@ const addTextContent = (parent, selector, text) => {
   parent.querySelector(selector).textContent = text;
 };
 
+const addHTMLContent = (parent, selector, html) => {
+  parent.querySelector(selector).innerHTML = html;
+};
+
 const addFeatures = (cardElement, features) => {
   const featuresElementsList = cardElement.querySelectorAll('.popup__feature');
 
@@ -15,6 +19,17 @@ const addFeatures = (cardElement, features) => {
     if (!isAvailable) {
       element.remove();
     }
+  });
+};
+
+const addPhotos = (cardElement, paths) => {
+  const photosContainer = cardElement.querySelector('.popup__photos');
+  const imageTemplate = cardElement.querySelector('.popup__photo');
+  photosContainer.innerHTML = '';
+  paths.forEach((path) => {
+    const img = imageTemplate.cloneNode(true);
+    img.src = path;
+    photosContainer.append(img);
   });
 };
 
@@ -28,12 +43,13 @@ const generateCardElements = (cards) => {
     const cardElement = template.cloneNode(true);
     addTextContent(cardElement, '.popup__title', title);
     addTextContent(cardElement, '.popup__text--address', address);
-    addTextContent(cardElement, '.popup__text--price', `${ price } \u{20BD}/ночь`);
+    addHTMLContent(cardElement, '.popup__text--price', `${ price } <span>\u{20BD}/ночь</span>`);
     addTextContent(cardElement, '.popup__type', `${ TYPES[type] }`);
     addTextContent(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`);
     addTextContent(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`);
     addTextContent(cardElement, '.popup__description', description);
     addFeatures(cardElement, features);
+    addPhotos(cardElement, photos);
 
 
     fragment.append(cardElement);
