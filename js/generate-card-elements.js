@@ -2,15 +2,23 @@ import { getSettings } from './settings.js';
 
 const {TYPES} = getSettings();
 
+const addCardContent = (parent, selector, text) => {
+  parent.querySelector(selector).textContent = text;
+};
+
 const generateCardElements = (cards) => {
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#card').content.querySelector('.popup');
-  cards.forEach((card) => {
+  cards.forEach(({
+                   avatar,
+                   offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
+                 }) => {
     const cardHTML = template.cloneNode(true);
-    cardHTML.querySelector('.popup__title').textContent = card.offer.title;
-    cardHTML.querySelector('.popup__text--address').textContent = card.offer.address;
-    cardHTML.querySelector('.popup__text--price').textContent = `${ card.offer.price } \u{20BD}/ночь`;
-    cardHTML.querySelector('.popup__type').textContent = `${ TYPES[card.offer.type] }`;
+    addCardContent(cardHTML, '.popup__title', title);
+    addCardContent(cardHTML, '.popup__text--address', address);
+    addCardContent(cardHTML, '.popup__text--price', `${ price } \u{20BD}/ночь`);
+    addCardContent(cardHTML, '.popup__type', `${ TYPES[type] }`);
+
     fragment.append(cardHTML);
   });
   document.querySelector('#map-canvas').append(fragment.children[0]);
