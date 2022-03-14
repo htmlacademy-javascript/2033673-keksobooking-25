@@ -25,9 +25,24 @@ const putActiveState = (form, filters) => {
 const validateForm = (form) => {
   const pristine = new Pristine(form);
 
+  const capacityField = form.querySelector('#capacity');
+  const roomsField = form.querySelector('#room_number');
+
+  pristine.addValidator(
+    capacityField,
+    () => {
+      if (roomsField.value === '100') {
+        return capacityField.value === '0';
+      } else {
+        return (capacityField.value <= roomsField.value && capacityField.value > 0);
+      }
+    },
+    'Количество гостей больше количества комнат',
+  );
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    return pristine.validate();
+    pristine.validate();
   });
 };
 
