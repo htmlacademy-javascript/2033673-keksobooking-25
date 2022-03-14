@@ -22,4 +22,13 @@ const putActiveState = (form, filters) => {
   });
 };
 
-export { putInactiveState, putActiveState };
+const validateForm = (form) => {
+  const pristine = new Pristine(form);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    return pristine.validate();
+  });
+};
+
+export { putInactiveState, putActiveState, validateForm };
