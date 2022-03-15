@@ -18,6 +18,7 @@ const getCapacityErrorMessage = (capacity, rooms) => {
 const validateForm = (form) => {
   const pristine = new Pristine(form, {
     classTo: 'ad-form__element',
+    errorTextClass: 'ad-form__error-message',
     errorTextParent: 'ad-form__element',
   });
 
