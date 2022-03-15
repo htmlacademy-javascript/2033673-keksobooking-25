@@ -27,8 +27,8 @@ const validateForm = (form) => {
 
   pristine.addValidator(
     capacityField,
-    () => checkCapacity(+capacityField.value, +roomsField.value, 10),
-    () => getCapacityErrorMessage(+capacityField.value, 10, +roomsField.value),
+    () => checkCapacity(+capacityField.value, +roomsField.value),
+    () => getCapacityErrorMessage(+capacityField.value, +roomsField.value),
   );
 
   roomsField.addEventListener('change', () => {
