@@ -23,7 +23,10 @@ const putActiveState = (form, filters) => {
 };
 
 const validateForm = (form) => {
-  const pristine = new Pristine(form);
+  const pristine = new Pristine(form, {
+    classTo: 'ad-form__element',
+    errorTextParent: 'ad-form__element',
+  });
 
   const capacityField = form.querySelector('#capacity');
   const roomsField = form.querySelector('#room_number');
@@ -42,7 +45,13 @@ const validateForm = (form) => {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    pristine.validate();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      console.log('valid');
+    } else {
+      console.log('invalid');
+    }
   });
 };
 
