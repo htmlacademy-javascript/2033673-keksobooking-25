@@ -8,11 +8,11 @@ const checkCapacity = (capacity, rooms) => {
 
 const getCapacityErrorMessage = (capacity, rooms) => {
   if (rooms === 100 && capacity !== 0) {
-    return 'Слишком много комнат для гостей'
+    return 'Слишком много комнат для гостей';
   } else {
-    return 'Количество гостей больше количества комнат'
+    return 'Количество гостей больше количества комнат';
   }
-}
+};
 
 
 const validateForm = (form) => {
@@ -27,8 +27,8 @@ const validateForm = (form) => {
 
   pristine.addValidator(
     capacityField,
-    () => checkCapacity(parseInt(capacityField.value), parseInt(roomsField.value)),
-    () => getCapacityErrorMessage(parseInt(capacityField.value), parseInt(roomsField.value)),
+    () => checkCapacity(+capacityField.value, +roomsField.value, 10),
+    () => getCapacityErrorMessage(+capacityField.value, 10, +roomsField.value),
   );
 
   roomsField.addEventListener('change', () => {
@@ -40,9 +40,9 @@ const validateForm = (form) => {
     const isValid = pristine.validate();
 
     if (isValid) {
-      console.log('valid');
+      return 'valid form';
     } else {
-      console.log('invalid');
+      return 'invalid form';
     }
   });
 };
