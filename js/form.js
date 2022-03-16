@@ -1,31 +1,26 @@
-const adForm = document.querySelector('.ad-form');
-const adFormInteractive = [...adForm.children];
-const mapFilters = document.querySelector('.map__filters');
-const mapFilterInteractive = [...mapFilters.children];
-
-
-const putInactiveState = () => {
-  adForm.classList.add('.ad-form--disabled');
-  adFormInteractive.forEach((element) => {
-    element.disabled = true;
+const putInactiveState = (form, filters) => {
+  form.classList.add('.ad-form--disabled');
+  [...form.children].forEach((element) => {
+    element.setAttribute('disabled', true);
   });
 
-  mapFilters.classList.add('.map__filters--disabled');
-  mapFilterInteractive.forEach((element) => {
-    element.disabled = true;
+  filters.classList.add('.map__filters--disabled');
+  [...filters.children].forEach((element) => {
+    element.setAttribute('disabled', true);
   });
 };
 
-const putActiveState = () => {
-  adForm.classList.remove('.ad-form--disabled');
-  adFormInteractive.forEach((element) => {
-    element.disabled = false;
+const putActiveState = (form, filters) => {
+  form.classList.remove('.ad-form--disabled');
+  [...form.children].forEach((element) => {
+    element.removeAttribute('disabled');
   });
 
-  mapFilters.classList.remove('.map__filters--disabled');
-  mapFilterInteractive.forEach((element) => {
-    element.disabled = false;
+  filters.classList.remove('.map__filters--disabled');
+  [...filters.children].forEach((element) => {
+    element.removeAttribute('disabled');
   });
 };
+
 
 export { putInactiveState, putActiveState };
