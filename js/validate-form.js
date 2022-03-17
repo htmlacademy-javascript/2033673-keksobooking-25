@@ -1,3 +1,7 @@
+import { getSettings } from './settings.js';
+
+const { MIN_PRICE } = getSettings();
+
 const checkCapacity = (capacity, rooms) => {
   if (rooms === 100) {
     return capacity === 0;
@@ -14,6 +18,14 @@ const getCapacityErrorMessage = (capacity, rooms) => {
   }
 };
 
+const checkPrice = (price, type) => price >= MIN_PRICE[type];
+
+const getPriceErrorMessage = (price, type) => {
+  if (price <= MIN_PRICE[type]) {
+    return 'Меньше минимального значения';
+  }
+};
+
 
 const validateForm = (form) => {
   const pristine = new Pristine(form, {
@@ -24,6 +36,8 @@ const validateForm = (form) => {
 
   const capacityField = form.querySelector('#capacity');
   const roomsField = form.querySelector('#room_number');
+  const typeField = form.querySelector('#type');
+  const priceField = form.querySelector('#price');
 
   pristine.addValidator(
     capacityField,
@@ -31,8 +45,19 @@ const validateForm = (form) => {
     () => getCapacityErrorMessage(+capacityField.value, +roomsField.value),
   );
 
+  pristine.addValidator(
+    priceField,
+    () => checkPrice(+priceField.value, typeField.value),
+    () => getPriceErrorMessage(+priceField.value, typeField.value)
+  );
+
   roomsField.addEventListener('change', () => {
     pristine.validate(capacityField);
+  });
+
+  typeField.addEventListener('change', (e) => {
+    priceField.placeholder = MIN_PRICE[e.target.value];
+    pristine.validate(priceField);
   });
 
   form.addEventListener('submit', (e) => {
