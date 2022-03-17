@@ -38,12 +38,7 @@ const validateForm = (form) => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const isValid = pristine.validate();
-
-    if (isValid) {
-      return 'valid form';
-    } else {
-      return 'invalid form';
-    }
+    return isValid ? 'valid form' : 'invalid form';
   });
 };
 
