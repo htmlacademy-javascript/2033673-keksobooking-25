@@ -38,6 +38,8 @@ const validateForm = (form) => {
   const roomsField = form.querySelector('#room_number');
   const typeField = form.querySelector('#type');
   const priceField = form.querySelector('#price');
+  const timeinField = form.querySelector('#timein');
+  const timeoutField = form.querySelector('#timeout');
 
   pristine.addValidator(
     capacityField,
@@ -58,6 +60,14 @@ const validateForm = (form) => {
   typeField.addEventListener('change', (e) => {
     priceField.placeholder = MIN_PRICE[e.target.value];
     pristine.validate(priceField);
+  });
+
+  timeinField.addEventListener('change', (e) => {
+    timeoutField.value = e.target.value;
+  });
+
+  timeoutField.addEventListener('change', (e) => {
+    timeinField.value = e.target.value;
   });
 
   form.addEventListener('submit', (e) => {
