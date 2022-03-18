@@ -9,6 +9,13 @@ const getSettings = () => ({
     'bungalow': 'Бунгало',
     'hotel': 'Отель',
   },
+  MIN_PRICE: {
+    'bungalow': 0,
+    'flat': 1000,
+    'hotel': 3000,
+    'house': 5000,
+    'palace': 10000,
+  },
   CHECKIN_TIMES: ['12:00', '13:00', '14:00'],
   CHECKOUT_TIMES: ['12:00', '13:00', '14:00'],
   FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
@@ -28,4 +35,4 @@ const getSettings = () => ({
   HI_GUESTS: 10,
 });
 
-export {getSettings};
+export { getSettings };
