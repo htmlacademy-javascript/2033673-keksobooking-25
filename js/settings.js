@@ -33,6 +33,10 @@ const getSettings = () => ({
   HI_ROOMS: 6,
   LOW_GUESTS: 1,
   HI_GUESTS: 10,
+  TOKYO_CENTER: {
+    lat: 35.6895,
+    lng: 139.692,
+  }
 });
 
 export { getSettings };
