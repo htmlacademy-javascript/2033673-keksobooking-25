@@ -1,4 +1,4 @@
-const putInactiveState = (form, filters) => {
+const putFormInactiveState = (form, filters) => {
   form.classList.add('.ad-form--disabled');
   [...form.children].forEach((element) => {
     element.setAttribute('disabled', true);
@@ -10,7 +10,7 @@ const putInactiveState = (form, filters) => {
   });
 };
 
-const putActiveState = (form, filters) => {
+const putFormActiveState = (form, filters) => {
   form.classList.remove('.ad-form--disabled');
   [...form.children].forEach((element) => {
     element.removeAttribute('disabled');
@@ -23,4 +23,4 @@ const putActiveState = (form, filters) => {
 };
 
 
-export { putInactiveState, putActiveState };
+export { putFormInactiveState, putFormActiveState };

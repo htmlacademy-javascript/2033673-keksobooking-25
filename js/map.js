@@ -1,9 +1,13 @@
 import { getSettings } from './settings.js';
 
-const { TOKYO_CENTER } = getSettings();
+const { TOKYO_CENTER, DEFAULT_ZOOM } = getSettings();
+let isMapLoaded = false;
 
 const map = L.map('map-canvas')
-  .setView(TOKYO_CENTER, 11);
+  .on('load', () => {
+    isMapLoaded = true;
+  })
+  .setView(TOKYO_CENTER, DEFAULT_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -11,3 +15,5 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+export { isMapLoaded };
