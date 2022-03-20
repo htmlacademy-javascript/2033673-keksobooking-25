@@ -16,4 +16,21 @@ L.tileLayer(
   },
 ).addTo(map);
 
+
+const mainMarkerIcon = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: [30, 30],
+  iconAnchor: [15, 30]
+});
+
+const mainMarker = L.marker(
+  TOKYO_CENTER,
+  {
+    draggable: true,
+    icon: mainMarkerIcon,
+  }
+);
+
+mainMarker.addTo(map);
+
 export { isMapLoaded };

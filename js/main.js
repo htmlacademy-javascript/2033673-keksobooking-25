@@ -4,7 +4,7 @@ import { createAdvertisement } from './create-advertisement.js';
 import { generateCardElements } from './generate-card-elements.js';
 import { putFormInactiveState, putFormActiveState } from './form-state.js';
 import { formValidate } from './form-validate.js';
-import {isMapLoaded} from './map.js';
+import { isMapLoaded } from './map.js';
 import './map.js';
 
 
@@ -18,7 +18,5 @@ if (!isMapLoaded) {
 } else {
   generateCardElements(advertisements);
   putFormActiveState(adForm, mapFilters);
-
+  formValidate(adForm);
 }
-
-formValidate(adForm);
