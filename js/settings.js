@@ -1,7 +1,7 @@
 const getSettings = () => ({
   SIMILAR_ADVERTISEMENTS: 10,
-  LOW_PRICE: 1,
-  HIGH_PRICE: 1000,
+  LOW_PRICE: 0,
+  HIGH_PRICE: 100000,
   TYPES: {
     'palace': 'Дворец',
     'flat': 'Квартира',

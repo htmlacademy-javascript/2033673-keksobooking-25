@@ -6,6 +6,7 @@ import { putFormInactiveState, putFormActiveState } from './form-state.js';
 import { formValidate } from './form-validate.js';
 import { isMapLoaded, createMarkers } from './map.js';
 import './map.js';
+import './price-slider.js';
 
 
 const { adForm, mapFilters } = getElements();
