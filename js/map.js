@@ -45,4 +45,27 @@ mainMarker.on('moveend', (e) => {
   addressField.value = `${ (coordinates.lat).toFixed(DIGITS) }, ${ (coordinates.lng).toFixed(DIGITS) }`;
 });
 
-export { isMapLoaded };
+const similarAdvertisementsGroup = L.layerGroup().addTo(map);
+
+const simpleIcon = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
+});
+
+const createMarker = (lat, lng) => {
+  const marker = L.marker(
+    { lat, lng },
+    { icon: simpleIcon }
+  );
+
+  marker.addTo(similarAdvertisementsGroup);
+};
+
+const createMarkers = (advertisements) => {
+  advertisements.forEach(({ location: { lat, lng } }) => {
+    createMarker(lat, lng);
+  });
+};
+
+export { isMapLoaded, createMarkers };
