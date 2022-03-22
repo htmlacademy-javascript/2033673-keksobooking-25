@@ -36,7 +36,7 @@ const generateAvatar = () => {
 };
 
 const getRandomList = (array) => {
-  const times = getRandomNumber(1, array.length);
+  const times = getRandomNumber(0, array.length);
   const result = [];
   for (let i = 0; i < times; i++) {
     result.push(array[getRandomNumber(0, array.length - 1)]);

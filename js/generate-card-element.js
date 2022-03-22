@@ -2,40 +2,44 @@ import { getSettings } from './settings.js';
 
 const { TYPES } = getSettings();
 
-const addTextContent = (parent, selector, text) => {
-  parent.querySelector(selector).textContent = text;
+
+const addTextContent = (element, text) => {
+  element.textContent = text;
 };
 
-const addHTMLContent = (parent, selector, html) => {
-  parent.querySelector(selector).innerHTML = html;
+const addHTMLContent = (element, text) => {
+  element.innerHTML = `${ text } <span>\u{20BD}/ночь</span>`;
 };
 
-const addFeatures = (cardElement, features) => {
-  const featuresElementsList = cardElement.querySelectorAll('.popup__feature');
+const addFeatures = (element, features) => {
+  const featuresElementsList = [...element.children];
 
-  featuresElementsList.forEach((element) => {
-    const isAvailable = features.some((feature) => element.classList.contains(`popup__feature--${ feature }`));
+  featuresElementsList.forEach((item) => {
+    const isAvailable = features.some((feature) => item.classList.contains(`popup__feature--${ feature }`));
 
     if (!isAvailable) {
-      element.remove();
+      item.remove();
     }
   });
 };
 
-const addPhotos = (cardElement, paths) => {
-  const photosContainer = cardElement.querySelector('.popup__photos');
-  const imageTemplate = cardElement.querySelector('.popup__photo');
-  photosContainer.innerHTML = '';
-  paths.forEach((path) => {
-    const img = imageTemplate.cloneNode(true);
-    img.src = path;
-    photosContainer.append(img);
-  });
+const addPhotos = (element, paths) => {
+  element.innerHTML =
+    paths.map((path) => `<img src="${ path }" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
+      .join('');
 };
 
-const addAvatar = (cartElement, path) => {
-  const avatar = cartElement.querySelector('.popup__avatar');
-  avatar.src = path;
+const addAvatar = (element, path) => {
+  element.src = path;
+};
+
+const addInfo = (parent, selector, info, func) => {
+  const element = parent.querySelector(selector);
+  if (!info) {
+    element.style.display = 'none';
+  } else {
+    func(element, info);
+  }
 };
 
 const generateCardElement = (card) => {
@@ -45,16 +49,16 @@ const generateCardElement = (card) => {
     offer: { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos }
   } = card;
   const cardElement = template.cloneNode(true);
-  addTextContent(cardElement, '.popup__title', title);
-  addTextContent(cardElement, '.popup__text--address', address);
-  addHTMLContent(cardElement, '.popup__text--price', `${ price } <span>\u{20BD}/ночь</span>`);
-  addTextContent(cardElement, '.popup__type', `${ TYPES[type] }`);
-  addTextContent(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`);
-  addTextContent(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`);
-  addTextContent(cardElement, '.popup__description', description);
-  addFeatures(cardElement, features);
-  addPhotos(cardElement, photos);
-  addAvatar(cardElement, avatar);
+  addInfo(cardElement, '.popup__title', title, addTextContent);
+  addInfo(cardElement, '.popup__text--address', address, addTextContent);
+  addInfo(cardElement, '.popup__text--price', price, addHTMLContent);
+  addInfo(cardElement, '.popup__type', `${ TYPES[type] }`, addTextContent);
+  addInfo(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`, addTextContent);
+  addInfo(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`, addTextContent);
+  addInfo(cardElement, '.popup__description', description, addTextContent);
+  addInfo(cardElement, '.popup__features', features, addFeatures);
+  addInfo(cardElement, '.popup__photos', photos, addPhotos);
+  addInfo(cardElement, '.popup__avatar', avatar, addAvatar);
 
   return cardElement;
 };
