@@ -1,5 +1,6 @@
 import { getSettings } from './settings.js';
 import { getElements } from './elements.js';
+import { generateCardElement } from './generate-card-element.js';
 
 const { TOKYO_CENTER, DEFAULT_ZOOM, DIGITS } = getSettings();
 const { adForm } = getElements();
@@ -53,18 +54,21 @@ const simpleIcon = L.icon({
   iconAnchor: [20, 40]
 });
 
-const createMarker = (lat, lng) => {
+const createMarker = (point) => {
+  const { location: { lat, lng } } = point;
   const marker = L.marker(
     { lat, lng },
-    { icon: simpleIcon }
+    { icon: simpleIcon },
   );
 
-  marker.addTo(similarAdvertisementsGroup);
+  marker
+    .addTo(similarAdvertisementsGroup)
+    .bindPopup(generateCardElement(point));
 };
 
 const createMarkers = (advertisements) => {
-  advertisements.forEach(({ location: { lat, lng } }) => {
-    createMarker(lat, lng);
+  advertisements.forEach((adPoint) => {
+    createMarker(adPoint);
   });
 };
 

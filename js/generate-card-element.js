@@ -1,6 +1,6 @@
 import { getSettings } from './settings.js';
 
-const {TYPES} = getSettings();
+const { TYPES } = getSettings();
 
 const addTextContent = (parent, selector, text) => {
   parent.querySelector(selector).textContent = text;
@@ -38,27 +38,26 @@ const addAvatar = (cartElement, path) => {
   avatar.src = path;
 };
 
-const generateCardElements = (cards) => {
-  const fragment = document.createDocumentFragment();
+const generateCardElement = (card) => {
   const template = document.querySelector('#card').content.querySelector('.popup');
-  cards.forEach(({
-    author: {avatar},
-    offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
-  }) => {
-    const cardElement = template.cloneNode(true);
-    addTextContent(cardElement, '.popup__title', title);
-    addTextContent(cardElement, '.popup__text--address', address);
-    addHTMLContent(cardElement, '.popup__text--price', `${ price } <span>\u{20BD}/ночь</span>`);
-    addTextContent(cardElement, '.popup__type', `${ TYPES[type] }`);
-    addTextContent(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`);
-    addTextContent(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`);
-    addTextContent(cardElement, '.popup__description', description);
-    addFeatures(cardElement, features);
-    addPhotos(cardElement, photos);
-    addAvatar(cardElement, avatar);
+  const {
+    author: { avatar },
+    offer: { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos }
+  } = card;
+  const cardElement = template.cloneNode(true);
+  addTextContent(cardElement, '.popup__title', title);
+  addTextContent(cardElement, '.popup__text--address', address);
+  addHTMLContent(cardElement, '.popup__text--price', `${ price } <span>\u{20BD}/ночь</span>`);
+  addTextContent(cardElement, '.popup__type', `${ TYPES[type] }`);
+  addTextContent(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`);
+  addTextContent(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`);
+  addTextContent(cardElement, '.popup__description', description);
+  addFeatures(cardElement, features);
+  addPhotos(cardElement, photos);
+  addAvatar(cardElement, avatar);
 
-    fragment.append(cardElement);
-  });
+  return cardElement;
 };
 
-export { generateCardElements };
+
+export { generateCardElement };
