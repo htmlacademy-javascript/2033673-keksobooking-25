@@ -1,5 +1,8 @@
 import { getSettings } from './settings.js';
+import { getElements } from './elements.js';
 
+
+const { adForm: form, priceSlider: slider } = getElements();
 const { MIN_PRICE } = getSettings();
 
 const checkCapacity = (capacity, rooms) => {
@@ -27,7 +30,7 @@ const getPriceErrorMessage = (price, type) => {
 };
 
 
-const validateForm = (form) => {
+const formValidate = () => {
   const pristine = new Pristine(form, {
     classTo: 'ad-form__element',
     errorTextClass: 'ad-form__error-message',
@@ -62,6 +65,10 @@ const validateForm = (form) => {
     pristine.validate(priceField);
   });
 
+  slider.noUiSlider.on('update', () => {
+    pristine.validate(priceField);
+  });
+
   timeinField.addEventListener('change', (e) => {
     timeoutField.value = e.target.value;
   });
@@ -78,4 +85,4 @@ const validateForm = (form) => {
 };
 
 
-export { validateForm };
+export { formValidate };

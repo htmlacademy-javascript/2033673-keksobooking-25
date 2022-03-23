@@ -1,7 +1,7 @@
 const getSettings = () => ({
   SIMILAR_ADVERTISEMENTS: 10,
-  LOW_PRICE: 1,
-  HIGH_PRICE: 1000,
+  LOW_PRICE: 0,
+  HIGH_PRICE: 100000,
   TYPES: {
     'palace': 'Дворец',
     'flat': 'Квартира',
@@ -33,6 +33,21 @@ const getSettings = () => ({
   HI_ROOMS: 6,
   LOW_GUESTS: 1,
   HI_GUESTS: 10,
+  TOKYO_CENTER: {
+    lat: 35.6895,
+    lng: 139.692,
+  },
+  DEFAULT_ZOOM: 11,
+  MAIN_MARKER_ICON: {
+    iconUrl: './img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52]
+  },
+  SIMPLE_MARKER_ICON: {
+    iconUrl: './img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40]
+  }
 });
 
 export { getSettings };

@@ -1,18 +1,17 @@
 import { getSettings } from './settings.js';
-import { getElements } from './elements.js';
 import { createAdvertisement } from './create-advertisement.js';
-import { generateCardElements } from './generate-card-elements.js';
-import { putInactiveState, putActiveState } from './form.js';
-import { validateForm } from './validate-form.js';
+import { formValidate } from './form-validate.js';
+import { mapInit, createMarkers } from './map.js';
+import { putFormInactiveState } from './form-state.js';
+import { priceSliderInit } from './price-slider.js';
 
 
-const {adForm, mapFilters} = getElements();
-const {SIMILAR_ADVERTISEMENTS} = getSettings();
+const { SIMILAR_ADVERTISEMENTS } = getSettings();
 
-const advertisements = Array.from({length: SIMILAR_ADVERTISEMENTS}, createAdvertisement);
+const advertisements = Array.from({ length: SIMILAR_ADVERTISEMENTS }, createAdvertisement);
 
-putInactiveState(adForm, mapFilters);
-generateCardElements(advertisements);
-putActiveState(adForm, mapFilters);
-
-validateForm(adForm);
+priceSliderInit();
+putFormInactiveState();
+const map = mapInit();
+createMarkers(map, advertisements);
+formValidate();
