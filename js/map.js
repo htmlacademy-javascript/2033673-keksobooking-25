@@ -1,75 +1,70 @@
 import { getSettings } from './settings.js';
 import { getElements } from './elements.js';
 import { generateCardElement } from './generate-card-element.js';
+import { putFormActiveState } from './form-state.js';
 
-const { TOKYO_CENTER, DEFAULT_ZOOM, DIGITS } = getSettings();
-const { adForm } = getElements();
+const { TOKYO_CENTER, DEFAULT_ZOOM, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON } = getSettings();
+const { adForm, mapFilters } = getElements();
 
 
-let isMapLoaded = false;
 const addressField = adForm.querySelector('#address');
 
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    isMapLoaded = true;
-    addressField.value = `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`;
-  })
-  .setView(TOKYO_CENTER, DEFAULT_ZOOM);
+const createMainMarker = () => {
+  const mainMarker = L.marker(
+    TOKYO_CENTER,
+    {
+      draggable: true,
+      icon: L.icon(MAIN_MARKER_ICON),
+    }
+  );
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+  mainMarker.on('moveend', (e) => {
+    const coordinates = e.target.getLatLng();
+    addressField.value = `${ (coordinates.lat).toFixed(DIGITS) }, ${ (coordinates.lng).toFixed(DIGITS) }`;
+  });
+  return mainMarker;
+};
 
 
-const mainMarkerIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52]
-});
+const mapInit = () => {
+  const map = L.map('map-canvas')
+    .on('load', () => {
+      addressField.value = `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`;
+      putFormActiveState(adForm, mapFilters);
+    })
+    .setView(TOKYO_CENTER, DEFAULT_ZOOM);
 
-const mainMarker = L.marker(
-  TOKYO_CENTER,
-  {
-    draggable: true,
-    icon: mainMarkerIcon,
-  }
-);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
 
-mainMarker.addTo(map);
+  createMainMarker().addTo(map);
+  return map;
+};
 
-mainMarker.on('moveend', (e) => {
-  const coordinates = e.target.getLatLng();
-  addressField.value = `${ (coordinates.lat).toFixed(DIGITS) }, ${ (coordinates.lng).toFixed(DIGITS) }`;
-});
 
-const similarAdvertisementsGroup = L.layerGroup().addTo(map);
-
-const simpleIcon = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-const createMarker = (point) => {
+const createMarker = (point, layer) => {
   const { location: { lat, lng } } = point;
   const marker = L.marker(
     { lat, lng },
-    { icon: simpleIcon },
+    { icon: L.icon(SIMPLE_MARKER_ICON) },
   );
 
   marker
-    .addTo(similarAdvertisementsGroup)
+    .addTo(layer)
     .bindPopup(generateCardElement(point));
 };
 
-const createMarkers = (advertisements) => {
+const createMarkers = (map, advertisements) => {
+  const layer = L.layerGroup().addTo(map);
+
   advertisements.forEach((adPoint) => {
-    createMarker(adPoint);
+    createMarker(adPoint, layer);
   });
 };
 
-export { isMapLoaded, createMarkers };
+export { mapInit, createMarkers };

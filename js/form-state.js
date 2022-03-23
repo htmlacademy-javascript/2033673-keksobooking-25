@@ -1,23 +1,32 @@
-const putFormInactiveState = (form, filters) => {
-  form.classList.add('.ad-form--disabled');
-  [...form.children].forEach((element) => {
+import { getElements } from './elements.js';
+
+const { adForm, mapFilters, priceSlider } = getElements();
+
+const putFormInactiveState = () => {
+  adForm.classList.add('.ad-form--disabled');
+  [...adForm.children].forEach((element) => {
     element.setAttribute('disabled', true);
   });
 
-  filters.classList.add('.map__filters--disabled');
-  [...filters.children].forEach((element) => {
+  priceSlider.setAttribute('disabled', true);
+
+  mapFilters.classList.add('.map__filters--disabled');
+  [...mapFilters.children].forEach((element) => {
     element.setAttribute('disabled', true);
   });
 };
 
-const putFormActiveState = (form, filters) => {
-  form.classList.remove('.ad-form--disabled');
-  [...form.children].forEach((element) => {
+const putFormActiveState = () => {
+  adForm.classList.remove('.ad-form--disabled');
+  [...adForm.children].forEach((element) => {
     element.removeAttribute('disabled');
   });
 
-  filters.classList.remove('.map__filters--disabled');
-  [...filters.children].forEach((element) => {
+  priceSlider.removeAttribute('disabled');
+
+
+  mapFilters.classList.remove('.map__filters--disabled');
+  [...mapFilters.children].forEach((element) => {
     element.removeAttribute('disabled');
   });
 };
