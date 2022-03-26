@@ -1,0 +1,8 @@
+.ad-form__error-message {
+  color: red;
+  font-size: 0.75rem;
+}
+
+.popup__field--hidden {
+  display: none;
+}
