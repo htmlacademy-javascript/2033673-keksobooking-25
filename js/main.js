@@ -1,17 +1,14 @@
-import { getSettings } from './settings.js';
-import { createAdvertisement } from './create-advertisement.js';
+import './map.js';
+
 import { formValidate } from './form-validate.js';
-import { mapInit, createMarkers } from './map.js';
+import { createMarkers } from './map.js';
 import { putFormInactiveState } from './form-state.js';
 import { priceSliderInit } from './price-slider.js';
+import { getData } from './server-requests.js';
+import { onErrorRequest } from './messages.js';
 
-
-const { SIMILAR_ADVERTISEMENTS } = getSettings();
-
-const advertisements = Array.from({ length: SIMILAR_ADVERTISEMENTS }, createAdvertisement);
 
 priceSliderInit();
 putFormInactiveState();
-const map = mapInit();
-createMarkers(map, advertisements);
+getData(createMarkers, onErrorRequest);
 formValidate();
