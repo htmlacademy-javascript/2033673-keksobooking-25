@@ -1,14 +1,10 @@
-import './map.js';
+import './price-slider.js';
 
 import { formValidate } from './form-validate.js';
-import { createMarkers } from './map.js';
-import { putFormInactiveState } from './form-state.js';
-import { priceSliderInit } from './price-slider.js';
-import { getData } from './server-requests.js';
+import { createMarkers, initMap } from './map.js';
+import { renderAdvertisements } from './server-requests.js';
 import { onErrorRequest } from './messages.js';
 
-
-priceSliderInit();
-putFormInactiveState();
-getData(createMarkers, onErrorRequest);
+const map = initMap();
+renderAdvertisements(map, createMarkers, onErrorRequest);
 formValidate();

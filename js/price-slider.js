@@ -9,39 +9,35 @@ const priceField = form.querySelector('#price');
 const typeField = form.querySelector('#type');
 
 
-const priceSliderInit = () => {
-  noUiSlider.create(slider, {
+noUiSlider.create(slider, {
+  range: {
+    min: LOW_PRICE,
+    max: HIGH_PRICE,
+  },
+  start: MIN_PRICE['flat'],
+  step: 1,
+  connect: 'lower',
+  format: {
+    to: (value) => value.toFixed(0),
+    from: (value) => parseInt(value, 10),
+  }
+});
+
+slider.noUiSlider.on('update', () => {
+  priceField.value = slider.noUiSlider.get();
+});
+
+priceField.addEventListener('input', (e) => {
+  slider.noUiSlider.set(+e.target.value);
+});
+
+typeField.addEventListener('change', (e) => {
+  slider.noUiSlider.updateOptions({
     range: {
       min: LOW_PRICE,
-      max: HIGH_PRICE,
+      max: HIGH_PRICE
     },
-    start: MIN_PRICE['flat'],
+    start: MIN_PRICE[e.target.value],
     step: 1,
-    connect: 'lower',
-    format: {
-      to: (value) => value.toFixed(0),
-      from: (value) => parseInt(value, 10),
-    }
   });
-
-  slider.noUiSlider.on('update', () => {
-    priceField.value = slider.noUiSlider.get();
-  });
-
-  priceField.addEventListener('input', (e) => {
-    slider.noUiSlider.set(+e.target.value);
-  });
-
-  typeField.addEventListener('change', (e) => {
-    slider.noUiSlider.updateOptions({
-      range: {
-        min: LOW_PRICE,
-        max: HIGH_PRICE
-      },
-      start: MIN_PRICE[e.target.value],
-      step: 1,
-    });
-  });
-};
-
-export { priceSliderInit };
+});
