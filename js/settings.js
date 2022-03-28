@@ -1,5 +1,6 @@
 const getSettings = () => ({
-  GET_DATA_SERVER: 'https://25.javascript.pages.academy/keksobooking/daa',
+  GET_DATA_SERVER: 'https://25.javascript.pages.academy/keksobooking/data',
+  POST_DATA_SERVER: 'https://25.javascript.pages.academy/keksobookin',
   SIMILAR_ADVERTISEMENTS: 10,
   LOW_PRICE: 0,
   HIGH_PRICE: 100000,
