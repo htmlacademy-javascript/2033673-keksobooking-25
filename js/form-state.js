@@ -1,6 +1,24 @@
-import { getElements } from './elements.js';
+import { getElements, getFormFields } from './elements.js';
+import { getSettings } from './settings.js';
+import { cityMap, mainMarker } from './map.js';
 
 const { adForm, mapFilters, priceSlider } = getElements();
+const {
+  avatarField,
+  titleField,
+  typeField,
+  addressField,
+  timeinField,
+  timeoutField,
+  roomsField,
+  capacityField,
+  descriptionField,
+  featuresFields,
+  photoField,
+  priceField,
+} = getFormFields();
+
+const { MIN_PRICE, TOKYO_CENTER, DEFAULT_ZOOM } = getSettings();
 
 const setInactiveState = () => {
   adForm.classList.add('.ad-form--disabled');
@@ -31,5 +49,27 @@ const setActiveState = () => {
   });
 };
 
+const clearForm = () => {
+  avatarField.src = 'img/muffin-grey.svg';
+  titleField.value = '';
+  typeField.value = 'flat';
+  addressField.value = `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`;
+  priceField.value = MIN_PRICE['flat'];
+  timeinField.value = '12:00';
+  timeoutField.value = '12:00';
+  roomsField.value = '1';
+  capacityField.value = '3';
+  descriptionField.value = '';
+  photoField.innerHTML = '';
+  priceSlider.noUiSlider.set(MIN_PRICE['flat']);
 
-export { setInactiveState, setActiveState };
+  [...featuresFields].forEach((field) => {
+    field.checked = false;
+  });
+
+  cityMap.setView(TOKYO_CENTER, DEFAULT_ZOOM);
+  mainMarker.setLatLng(TOKYO_CENTER);
+};
+
+
+export { setInactiveState, setActiveState, clearForm };
