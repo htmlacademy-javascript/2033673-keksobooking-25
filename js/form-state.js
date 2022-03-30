@@ -3,22 +3,9 @@ import { getSettings } from './settings.js';
 import { cityMap, mainMarker } from './map.js';
 
 const { adForm, mapFilters, priceSlider } = getElements();
-const {
-  avatarField,
-  titleField,
-  typeField,
-  addressField,
-  timeinField,
-  timeoutField,
-  roomsField,
-  capacityField,
-  descriptionField,
-  featuresFields,
-  photoField,
-  priceField,
-} = getFormFields();
+const { addressField, priceField } = getFormFields();
 
-const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM, DEFAULT_AVATAR } = getSettings();
+const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM } = getSettings();
 
 const setInactiveState = () => {
   adForm.classList.add('.ad-form--disabled');
