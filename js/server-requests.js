@@ -15,7 +15,7 @@ const renderAdvertisements = (map) => {
       }
     })
     .then((data) => createMarkers(map, data.slice(0, SIMILAR_ADVERTISEMENTS)))
-    .catch((err) => onGetRequestError('Ошибка в получении данных. Попробуйте ещё раз.'));
+    .catch(() => onGetRequestError('Ошибка в получении данных. Попробуйте ещё раз.'));
 };
 
 const sendAdvertisement = (formData) => {
@@ -28,7 +28,7 @@ const sendAdvertisement = (formData) => {
         onPostRequestError();
       }
     })
-    .catch((err) => onPostRequestError());
+    .catch(() => onPostRequestError());
 };
 
 export { renderAdvertisements, sendAdvertisement };
