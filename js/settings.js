@@ -49,7 +49,8 @@ const getSettings = () => ({
     iconUrl: './img/pin.svg',
     iconSize: [40, 40],
     iconAnchor: [20, 40]
-  }
+  },
+  DEFAULT_AVATAR: './img/muffin-grey.svg',
 });
 
 export { getSettings };

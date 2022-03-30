@@ -1,6 +1,7 @@
 import { getSettings } from './settings.js';
 import { onGetRequestError, onPostRequestError, onPostRequestSuccess } from './messages.js';
 import { createMarkers } from './markers.js';
+import { clearFields } from './form-state.js';
 
 const { GET_DATA_SERVER, SIMILAR_ADVERTISEMENTS, POST_DATA_SERVER } = getSettings();
 
@@ -22,6 +23,7 @@ const sendAdvertisement = (formData) => {
     .then((response) => {
       if (response.ok) {
         onPostRequestSuccess();
+        clearFields();
       } else {
         onPostRequestError();
       }

@@ -18,7 +18,7 @@ const {
   priceField,
 } = getFormFields();
 
-const { MIN_PRICE, TOKYO_CENTER, DEFAULT_ZOOM } = getSettings();
+const { MIN_PRICE, TOKYO_CENTER, DEFAULT_ZOOM, DEFAULT_AVATAR } = getSettings();
 
 const setInactiveState = () => {
   adForm.classList.add('.ad-form--disabled');
@@ -49,12 +49,11 @@ const setActiveState = () => {
   });
 };
 
-const clearForm = () => {
-  avatarField.src = 'img/muffin-grey.svg';
+const clearFields = () => {
+  avatarField.src = DEFAULT_AVATAR;
   titleField.value = '';
   typeField.value = 'flat';
-  addressField.value = `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`;
-  priceField.value = MIN_PRICE['flat'];
+  priceField.setAttribute('value', MIN_PRICE['flat']);
   timeinField.value = '12:00';
   timeoutField.value = '12:00';
   roomsField.value = '1';
@@ -69,7 +68,13 @@ const clearForm = () => {
 
   cityMap.setView(TOKYO_CENTER, DEFAULT_ZOOM);
   mainMarker.setLatLng(TOKYO_CENTER);
+  addressField.setAttribute('value', `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`);
+};
+
+const formReset = () => {
+  const resetButton = document.querySelector('.ad-form__reset');
+  resetButton.addEventListener('click', clearFields);
 };
 
 
-export { setInactiveState, setActiveState, clearForm };
+export { setInactiveState, setActiveState, clearFields, formReset };

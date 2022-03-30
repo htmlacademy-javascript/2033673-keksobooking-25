@@ -1,6 +1,3 @@
-import { clearForm } from './form-state.js';
-
-
 const TIMEOUT = 3000;
 
 const onGetRequestError = (message) => {
@@ -18,10 +15,7 @@ const onPostRequestSuccess = () => {
   const message = document.querySelector('#success').content.querySelector('.success');
   document.body.appendChild(message);
 
-  message.addEventListener('click', () => {
-    clearForm();
-    message.remove();
-  });
+  message.addEventListener('click', () => message.remove());
 };
 
 const onPostRequestError = () => {
