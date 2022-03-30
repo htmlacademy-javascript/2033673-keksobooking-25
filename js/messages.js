@@ -28,10 +28,10 @@ const onPostRequestError = () => {
   const message = document.querySelector('#error').content.querySelector('.error');
   document.body.appendChild(message);
 
+  message.addEventListener('click', () => message.remove());
+
   const closeButton = message.querySelector('.error__button');
-  closeButton.addEventListener('click', () => {
-    message.remove();
-  });
+  closeButton.addEventListener('click', () => message.remove());
 };
 
 export { onGetRequestError, onPostRequestSuccess, onPostRequestError };
