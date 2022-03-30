@@ -18,7 +18,7 @@ const {
   priceField,
 } = getFormFields();
 
-const { MIN_PRICE, TOKYO_CENTER, DEFAULT_ZOOM, DEFAULT_AVATAR } = getSettings();
+const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM, DEFAULT_AVATAR } = getSettings();
 
 const setInactiveState = () => {
   adForm.classList.add('.ad-form--disabled');
@@ -52,11 +52,11 @@ const setActiveState = () => {
 const clearFields = () => {
   adForm.reset();
   priceField.setAttribute('value', MIN_PRICE['flat']);
-  addressField.setAttribute('value', `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`);
+  addressField.setAttribute('value', `${ DEFAULT_CENTER.lat }, ${ DEFAULT_CENTER.lng }`);
   priceSlider.noUiSlider.set(MIN_PRICE['flat']);
 
-  cityMap.setView(TOKYO_CENTER, DEFAULT_ZOOM);
-  mainMarker.setLatLng(TOKYO_CENTER);
+  cityMap.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  mainMarker.setLatLng(DEFAULT_CENTER);
 };
 
 const formReset = () => {

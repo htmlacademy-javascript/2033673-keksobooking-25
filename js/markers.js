@@ -3,12 +3,12 @@ import { getSettings } from './settings.js';
 import { getFormFields } from './elements.js';
 
 
-const { TOKYO_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON } = getSettings();
+const { DEFAULT_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON } = getSettings();
 const { addressField } = getFormFields();
 
 const createMainMarker = () => {
   const mainMarker = L.marker(
-    TOKYO_CENTER,
+    DEFAULT_CENTER,
     {
       draggable: true,
       icon: L.icon(MAIN_MARKER_ICON),
