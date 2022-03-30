@@ -50,25 +50,13 @@ const setActiveState = () => {
 };
 
 const clearFields = () => {
-  avatarField.src = DEFAULT_AVATAR;
-  titleField.value = '';
-  typeField.value = 'flat';
+  adForm.reset();
   priceField.setAttribute('value', MIN_PRICE['flat']);
-  timeinField.value = '12:00';
-  timeoutField.value = '12:00';
-  roomsField.value = '1';
-  capacityField.value = '3';
-  descriptionField.value = '';
-  photoField.innerHTML = '';
+  addressField.setAttribute('value', `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`);
   priceSlider.noUiSlider.set(MIN_PRICE['flat']);
-
-  [...featuresFields].forEach((field) => {
-    field.checked = false;
-  });
 
   cityMap.setView(TOKYO_CENTER, DEFAULT_ZOOM);
   mainMarker.setLatLng(TOKYO_CENTER);
-  addressField.setAttribute('value', `${ TOKYO_CENTER.lat }, ${ TOKYO_CENTER.lng }`);
 };
 
 const formReset = () => {
