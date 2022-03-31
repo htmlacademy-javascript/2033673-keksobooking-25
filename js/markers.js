@@ -3,7 +3,7 @@ import { getSettings } from './settings.js';
 import { getFormFields } from './elements.js';
 
 
-const { DEFAULT_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON } = getSettings();
+const { DEFAULT_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON, SIMILAR_ADVERTISEMENTS } = getSettings();
 const { addressField } = getFormFields();
 
 const createMainMarker = () => {
@@ -38,7 +38,7 @@ const createMarker = (point, layer) => {
 const createMarkers = (map, advertisements) => {
   const layer = L.layerGroup().addTo(map);
 
-  advertisements.forEach((adPoint) => {
+  advertisements.slice(0, SIMILAR_ADVERTISEMENTS).forEach((adPoint) => {
     createMarker(adPoint, layer);
   });
 };

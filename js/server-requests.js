@@ -1,11 +1,10 @@
 import { getSettings } from './settings.js';
 import { onGetRequestError, onPostRequestError, onPostRequestSuccess } from './messages.js';
-import { createMarkers } from './markers.js';
 import { clearFields } from './form-state.js';
 
-const { GET_DATA_SERVER, SIMILAR_ADVERTISEMENTS, POST_DATA_SERVER } = getSettings();
+const { GET_DATA_SERVER, POST_DATA_SERVER } = getSettings();
 
-const renderAdvertisements = (map) => {
+const getData = (onSuccess) => {
   fetch(GET_DATA_SERVER)
     .then((response) => {
       if (response.ok) {
@@ -14,7 +13,7 @@ const renderAdvertisements = (map) => {
         onGetRequestError('Ошибка в получении данных. Попробуйте ещё раз.');
       }
     })
-    .then((data) => createMarkers(map, data.slice(0, SIMILAR_ADVERTISEMENTS)))
+    .then((data) => onSuccess(data))
     .catch(() => onGetRequestError('Ошибка в получении данных. Попробуйте ещё раз.'));
 };
 
@@ -31,4 +30,4 @@ const sendAdvertisement = (formData) => {
     .catch(() => onPostRequestError());
 };
 
-export { renderAdvertisements, sendAdvertisement };
+export { getData, sendAdvertisement };
