@@ -1,4 +1,6 @@
 const getSettings = () => ({
+  GET_DATA_SERVER: 'https://25.javascript.pages.academy/keksobooking/data',
+  POST_DATA_SERVER: 'https://25.javascript.pages.academy/keksobooking',
   SIMILAR_ADVERTISEMENTS: 10,
   LOW_PRICE: 0,
   HIGH_PRICE: 100000,
@@ -33,7 +35,7 @@ const getSettings = () => ({
   HI_ROOMS: 6,
   LOW_GUESTS: 1,
   HI_GUESTS: 10,
-  TOKYO_CENTER: {
+  DEFAULT_CENTER: {
     lat: 35.6895,
     lng: 139.692,
   },
@@ -47,7 +49,8 @@ const getSettings = () => ({
     iconUrl: './img/pin.svg',
     iconSize: [40, 40],
     iconAnchor: [20, 40]
-  }
+  },
+  DEFAULT_AVATAR: './img/muffin-grey.svg',
 });
 
 export { getSettings };

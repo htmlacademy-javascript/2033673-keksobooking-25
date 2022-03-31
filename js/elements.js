@@ -4,4 +4,19 @@ const getElements = () => ({
   priceSlider: document.querySelector('.ad-form__slider')
 });
 
-export { getElements };
+const getFormFields = () => ({
+  avatarField: document.querySelector('.ad-form-header__preview img'),
+  titleField: document.querySelector('#title'),
+  addressField: document.querySelector('#address'),
+  typeField: document.querySelector('#type'),
+  priceField: document.querySelector('#price'),
+  timeinField: document.querySelector('#timein'),
+  timeoutField: document.querySelector('#timeout'),
+  roomsField: document.querySelector('#room_number'),
+  capacityField: document.querySelector('#capacity'),
+  featuresFields: document.querySelectorAll('.features__checkbox'),
+  descriptionField: document.querySelector('#description'),
+  photoField: document.querySelector('.ad-form__photo'),
+});
+
+export { getElements, getFormFields };

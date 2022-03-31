@@ -36,7 +36,7 @@ const addAvatar = (element, path) => {
 const addInfo = (parent, selector, info, func) => {
   const element = parent.querySelector(selector);
   if (!info) {
-    element.style.display = 'none';
+    element.classList.add('popup__field--hidden');
   } else {
     func(element, info);
   }

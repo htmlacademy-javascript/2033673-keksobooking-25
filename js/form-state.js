@@ -1,8 +1,13 @@
-import { getElements } from './elements.js';
+import { getElements, getFormFields } from './elements.js';
+import { getSettings } from './settings.js';
+import { cityMap, mainMarker } from './map.js';
 
 const { adForm, mapFilters, priceSlider } = getElements();
+const { addressField, priceField } = getFormFields();
 
-const putFormInactiveState = () => {
+const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM } = getSettings();
+
+const setInactiveState = () => {
   adForm.classList.add('.ad-form--disabled');
   [...adForm.children].forEach((element) => {
     element.setAttribute('disabled', true);
@@ -16,7 +21,7 @@ const putFormInactiveState = () => {
   });
 };
 
-const putFormActiveState = () => {
+const setActiveState = () => {
   adForm.classList.remove('.ad-form--disabled');
   [...adForm.children].forEach((element) => {
     element.removeAttribute('disabled');
@@ -31,5 +36,20 @@ const putFormActiveState = () => {
   });
 };
 
+const clearFields = () => {
+  adForm.reset();
+  priceField.setAttribute('value', MIN_PRICE['flat']);
+  addressField.setAttribute('value', `${ DEFAULT_CENTER.lat }, ${ DEFAULT_CENTER.lng }`);
+  priceSlider.noUiSlider.set(MIN_PRICE['flat']);
 
-export { putFormInactiveState, putFormActiveState };
+  cityMap.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  mainMarker.setLatLng(DEFAULT_CENTER);
+};
+
+const formReset = () => {
+  const resetButton = document.querySelector('.ad-form__reset');
+  resetButton.addEventListener('click', clearFields);
+};
+
+
+export { setInactiveState, setActiveState, clearFields, formReset };
