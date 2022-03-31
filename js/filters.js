@@ -1,4 +1,6 @@
 import { getElements } from './elements.js';
+import { createMarkers } from './markers.js';
+import { cityMap } from './map.js';
 
 const { mapFilters } = getElements();
 
@@ -41,7 +43,7 @@ const setFilters = (advertisements) => {
       .filter((item) => priceFilter(item, filters.price))
       .filter((item) => roomsFilter(item, filters.rooms))
       .filter((item) => guestsFilter(item, filters.guests));
-    console.log(filterAdvertisements);
+    createMarkers(cityMap, filterAdvertisements);
   });
 };
 
