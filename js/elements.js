@@ -19,4 +19,11 @@ const getFormFields = () => ({
   photoField: document.querySelector('.ad-form__photo'),
 });
 
-export { getElements, getFormFields };
+const getFilters = () => ({
+  typeFilter: document.querySelector('#housing-type'),
+  priceFilter: document.querySelector('#housing-price'),
+  roomsFilter: document.querySelector('#housing-rooms'),
+  guestsFilter: document.querySelector('#housing-guests'),
+});
+
+export { getElements, getFormFields, getFilters };

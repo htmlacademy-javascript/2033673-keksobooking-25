@@ -6,10 +6,12 @@ import { formValidate } from './form-validate.js';
 import { getData } from './server-requests.js';
 import { formReset } from './form-state.js';
 import { createMarkers } from './markers.js';
+import { setFilters } from './filters.js';
 
 
 getData((advertisements) => {
   createMarkers(cityMap, advertisements);
+  setFilters(advertisements);
 });
 formValidate();
 formReset();
