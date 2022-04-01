@@ -52,6 +52,7 @@ const getSettings = () => ({
   },
   DEFAULT_AVATAR: './img/muffin-grey.svg',
   DELAY_TIMEOUT: 500,
+  IMAGE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
 });
 
 export { getSettings };

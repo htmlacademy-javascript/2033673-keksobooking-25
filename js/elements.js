@@ -5,7 +5,8 @@ const getElements = () => ({
 });
 
 const getFormFields = () => ({
-  avatarField: document.querySelector('.ad-form-header__preview img'),
+  avatarField: document.querySelector('#avatar'),
+  avatarPreview: document.querySelector('.ad-form-header__preview img'),
   titleField: document.querySelector('#title'),
   addressField: document.querySelector('#address'),
   typeField: document.querySelector('#type'),
@@ -16,7 +17,8 @@ const getFormFields = () => ({
   capacityField: document.querySelector('#capacity'),
   featuresFields: document.querySelectorAll('.features__checkbox'),
   descriptionField: document.querySelector('#description'),
-  photoField: document.querySelector('.ad-form__photo'),
+  photoField: document.querySelector('#images'),
+  photoContainer: document.querySelector('.ad-form__photo'),
 });
 
 export { getElements, getFormFields };

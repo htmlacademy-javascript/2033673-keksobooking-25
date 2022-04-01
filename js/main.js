@@ -1,5 +1,7 @@
 import './price-slider.js';
 import './map.js';
+import './avatar.js';
+import './photo.js';
 
 import { cityMap } from './map.js';
 import { formValidate } from './form-validate.js';
