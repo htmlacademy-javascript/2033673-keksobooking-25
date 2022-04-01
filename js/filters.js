@@ -1,12 +1,13 @@
 import { getElements } from './elements.js';
 import { createMarkers } from './markers.js';
 import { cityMap } from './map.js';
+import { debounce } from './utils.js';
+import { getSettings } from './settings.js';
 
 const { mapFilters } = getElements();
+const {DELAY_TIMEOUT} = getSettings();
 
-const typeFilter = (item, type) => {
-  return item.offer.type === type || type === 'any';
-};
+const typeFilter = (item, type) => item.offer.type === type || type === 'any';
 
 const priceFilter = (item, priceLevel) => {
   switch (priceLevel) {
@@ -21,13 +22,9 @@ const priceFilter = (item, priceLevel) => {
   }
 };
 
-const roomsFilter = (item, rooms) => {
-  return item.offer.rooms === +rooms || rooms === 'any';
-};
+const roomsFilter = (item, rooms) => item.offer.rooms === +rooms || rooms === 'any';
 
-const guestsFilter = (item, guests) => {
-  return item.offer.guests === +guests || guests === 'any';
-};
+const guestsFilter = (item, guests) => item.offer.guests === +guests || guests === 'any';
 
 const getRank = (item) => {
   const featureFilters = [...document.querySelectorAll('.map__checkbox')];
@@ -58,13 +55,15 @@ const setFilters = (advertisements) => {
   };
   mapFilters.addEventListener('change', (e) => {
     filters[e.target.id.split('-')[1]] = e.target.value;
-    const filterAdvertisements = advertisements
-      .filter((item) => typeFilter(item, filters.type))
-      .filter((item) => priceFilter(item, filters.price))
-      .filter((item) => roomsFilter(item, filters.rooms))
-      .filter((item) => guestsFilter(item, filters.guests))
-      .sort(featuresCompare);
-    createMarkers(cityMap, filterAdvertisements);
+    debounce(() => {
+      const filterAdvertisements = advertisements
+        .filter((item) => typeFilter(item, filters.type))
+        .filter((item) => priceFilter(item, filters.price))
+        .filter((item) => roomsFilter(item, filters.rooms))
+        .filter((item) => guestsFilter(item, filters.guests))
+        .sort(featuresCompare);
+      createMarkers(cityMap, filterAdvertisements);
+    }, DELAY_TIMEOUT)();
   });
 };
 

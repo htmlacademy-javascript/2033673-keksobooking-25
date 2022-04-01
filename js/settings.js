@@ -51,6 +51,7 @@ const getSettings = () => ({
     iconAnchor: [20, 40]
   },
   DEFAULT_AVATAR: './img/muffin-grey.svg',
+  DELAY_TIMEOUT: 500,
 });
 
 export { getSettings };
