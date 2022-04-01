@@ -5,7 +5,7 @@ import { debounce } from './utils.js';
 import { getSettings } from './settings.js';
 
 const { mapFilters } = getElements();
-const {DELAY_TIMEOUT} = getSettings();
+const { DELAY_TIMEOUT } = getSettings();
 
 const typeFilter = (item, type) => item.offer.type === type || type === 'any';
 
@@ -54,6 +54,7 @@ const setFilters = (advertisements) => {
     guests: 'any',
   };
   mapFilters.addEventListener('change', (e) => {
+    cityMap.closePopup();
     filters[e.target.id.split('-')[1]] = e.target.value;
     debounce(() => {
       const filterAdvertisements = advertisements
