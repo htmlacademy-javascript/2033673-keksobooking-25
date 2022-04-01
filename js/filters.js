@@ -29,6 +29,26 @@ const guestsFilter = (item, guests) => {
   return item.offer.guests === +guests || guests === 'any';
 };
 
+const getRank = (item) => {
+  const featureFilters = [...document.querySelectorAll('.map__checkbox')];
+  const features = featureFilters.filter((filter) => filter.checked);
+  let rank = 0;
+  if (item.offer.features) {
+    features.forEach((feature) => {
+      if (item.offer.features.includes(feature.value)) {
+        rank++;
+      }
+    });
+  }
+  return rank;
+};
+
+const featuresCompare = (itemA, itemB) => {
+  const rankA = getRank(itemA);
+  const rankB = getRank(itemB);
+  return rankB - rankA;
+};
+
 const setFilters = (advertisements) => {
   const filters = {
     type: 'any',
@@ -42,7 +62,8 @@ const setFilters = (advertisements) => {
       .filter((item) => typeFilter(item, filters.type))
       .filter((item) => priceFilter(item, filters.price))
       .filter((item) => roomsFilter(item, filters.rooms))
-      .filter((item) => guestsFilter(item, filters.guests));
+      .filter((item) => guestsFilter(item, filters.guests))
+      .sort(featuresCompare);
     createMarkers(cityMap, filterAdvertisements);
   });
 };
