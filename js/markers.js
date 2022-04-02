@@ -1,9 +1,10 @@
 import { generateCardElement } from './generate-card-element.js';
 import { getSettings } from './settings.js';
 import { getFormFields } from './elements.js';
+import { layer } from './map.js';
 
 
-const { DEFAULT_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON } = getSettings();
+const { DEFAULT_CENTER, DIGITS, MAIN_MARKER_ICON, SIMPLE_MARKER_ICON, SIMILAR_ADVERTISEMENTS } = getSettings();
 const { addressField } = getFormFields();
 
 const createMainMarker = () => {
@@ -23,7 +24,7 @@ const createMainMarker = () => {
 };
 
 
-const createMarker = (point, layer) => {
+const createMarker = (point) => {
   const { location: { lat, lng } } = point;
   const marker = L.marker(
     { lat, lng },
@@ -36,9 +37,8 @@ const createMarker = (point, layer) => {
 };
 
 const createMarkers = (map, advertisements) => {
-  const layer = L.layerGroup().addTo(map);
-
-  advertisements.forEach((adPoint) => {
+  layer.clearLayers();
+  advertisements.slice(0, SIMILAR_ADVERTISEMENTS).forEach((adPoint) => {
     createMarker(adPoint, layer);
   });
 };

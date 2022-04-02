@@ -26,4 +26,6 @@ L.tileLayer(
 const mainMarker = createMainMarker();
 mainMarker.addTo(cityMap);
 
-export { cityMap, mainMarker };
+const layer = L.layerGroup().addTo(cityMap);
+
+export { cityMap, mainMarker, layer };
