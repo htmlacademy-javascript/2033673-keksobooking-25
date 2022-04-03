@@ -55,7 +55,7 @@ const setFilters = (advertisements) => {
   };
   mapFilters.addEventListener('change', (e) => {
     cityMap.closePopup();
-    filters[e.target.id.split('-')[1]] = e.target.value;
+    filters[e.target.dataset.filter] = e.target.value;
     debounce(() => {
       const filterAdvertisements = advertisements
         .filter((item) => typeFilter(item, filters.type))
