@@ -5,7 +5,7 @@ import { debounce } from './utils.js';
 import { getSettings } from './settings.js';
 
 const { mapFilters } = getElements();
-const { DELAY_TIMEOUT } = getSettings();
+const { DELAY_TIMEOUT, CHEAP_PRICE, MIDDLE_PRICE } = getSettings();
 
 const typeFilter = (item, type) => item.offer.type === type || type === 'any';
 
@@ -14,11 +14,11 @@ const priceFilter = (item, priceLevel) => {
     case 'any':
       return true;
     case 'middle':
-      return item.offer.price >= 10000 && item.offer.price <= 50000;
+      return item.offer.price >= CHEAP_PRICE && item.offer.price <= MIDDLE_PRICE;
     case 'low':
-      return item.offer.price < 10000;
+      return item.offer.price < CHEAP_PRICE;
     case 'high':
-      return item.offer.price > 50000;
+      return item.offer.price > MIDDLE_PRICE;
   }
 };
 

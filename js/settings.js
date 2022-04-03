@@ -3,6 +3,8 @@ const getSettings = () => ({
   POST_DATA_SERVER: 'https://25.javascript.pages.academy/keksobooking',
   SIMILAR_ADVERTISEMENTS: 10,
   LOW_PRICE: 0,
+  CHEAP_PRICE: 10000,
+  MIDDLE_PRICE: 50000,
   HIGH_PRICE: 100000,
   TYPES: {
     'palace': 'Дворец',
