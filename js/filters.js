@@ -1,11 +1,18 @@
 import { getElements } from './elements.js';
 import { createMarkers } from './markers.js';
-import { cityMap } from './map.js';
+import { cityMap, mainMarker } from './map.js';
 import { debounce } from './utils.js';
 import { getSettings } from './settings.js';
 
 const { mapFilters } = getElements();
-const { DELAY_TIMEOUT, CHEAP_PRICE, MIDDLE_PRICE } = getSettings();
+const { DELAY_TIMEOUT, CHEAP_PRICE, MIDDLE_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM } = getSettings();
+
+const filters = {
+  type: 'any',
+  price: 'any',
+  rooms: 'any',
+  guests: 'any',
+};
 
 const typeFilter = (item, type) => item.offer.type === type || type === 'any';
 
@@ -46,27 +53,59 @@ const featuresCompare = (itemA, itemB) => {
   return rankB - rankA;
 };
 
+const getFilterAdvertisements = (advertisements) => {
+  return debounce(() => {
+    const filterAdvertisements = advertisements
+      .filter((item) => typeFilter(item, filters.type))
+      .filter((item) => priceFilter(item, filters.price))
+      .filter((item) => roomsFilter(item, filters.rooms))
+      .filter((item) => guestsFilter(item, filters.guests))
+      .sort(featuresCompare);
+    createMarkers(filterAdvertisements);
+  }, DELAY_TIMEOUT)();
+};
+
 const setFilters = (advertisements) => {
-  const filters = {
-    type: 'any',
-    price: 'any',
-    rooms: 'any',
-    guests: 'any',
-  };
-  mapFilters.addEventListener('change', (e) => {
+  mapFilters.addEventListener('change', (evt) => {
     cityMap.closePopup();
-    filters[e.target.dataset.filter] = e.target.value;
-    debounce(() => {
-      const filterAdvertisements = advertisements
-        .filter((item) => typeFilter(item, filters.type))
-        .filter((item) => priceFilter(item, filters.price))
-        .filter((item) => roomsFilter(item, filters.rooms))
-        .filter((item) => guestsFilter(item, filters.guests))
-        .sort(featuresCompare);
-      createMarkers(cityMap, filterAdvertisements);
-    }, DELAY_TIMEOUT)();
+    filters[evt.target.dataset.filter] = evt.target.value;
+    getFilterAdvertisements(advertisements);
+  });
+
+  mapFilters.addEventListener('reset', () => {
+    Object.keys(filters).forEach((key) => {
+      filters[key] = 'any';
+    });
+    getFilterAdvertisements(advertisements);
+
   });
 };
 
+const setFiltersState = (state) => {
+  switch (state) {
+    case 'active': {
+      mapFilters.classList.remove('.map__filters--disabled');
+      [...mapFilters.children].forEach((element) => {
+        element.removeAttribute('disabled');
+      });
+      break;
+    }
+    case 'inactive': {
+      mapFilters.classList.add('.map__filters--disabled');
+      [...mapFilters.children].forEach((element) => {
+        element.setAttribute('disabled', true);
+      });
+      break;
+    }
+  }
+};
 
-export { setFilters };
+const clearFilters = () => {
+  mapFilters.reset();
+  cityMap.closePopup();
+  cityMap.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  mainMarker.setLatLng(DEFAULT_CENTER);
+
+};
+
+export { setFilters, setFiltersState, clearFilters };

@@ -1,10 +1,21 @@
 import { getSettings } from './settings.js';
-import { getElements } from './elements.js';
+import { getElements, getFormFields } from './elements.js';
 import { sendAdvertisement } from './server-requests.js';
 
 
 const { adForm: form, priceSlider: slider } = getElements();
-const { MIN_PRICE } = getSettings();
+const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_AVATAR } = getSettings();
+const {
+  capacityField,
+  roomsField,
+  typeField,
+  priceField,
+  timeinField,
+  timeoutField,
+  addressField,
+  avatarPreview,
+  photoContainer
+} = getFormFields();
 
 const checkCapacity = (capacity, rooms) => {
   if (rooms === 100) {
@@ -38,13 +49,6 @@ const formValidate = () => {
     errorTextParent: 'ad-form__element',
   });
 
-  const capacityField = form.querySelector('#capacity');
-  const roomsField = form.querySelector('#room_number');
-  const typeField = form.querySelector('#type');
-  const priceField = form.querySelector('#price');
-  const timeinField = form.querySelector('#timein');
-  const timeoutField = form.querySelector('#timeout');
-
   pristine.addValidator(
     capacityField,
     () => checkCapacity(+capacityField.value, +roomsField.value),
@@ -61,8 +65,8 @@ const formValidate = () => {
     pristine.validate(capacityField);
   });
 
-  typeField.addEventListener('change', (e) => {
-    priceField.placeholder = MIN_PRICE[e.target.value];
+  typeField.addEventListener('change', (evt) => {
+    priceField.placeholder = MIN_PRICE[evt.target.value];
     pristine.validate(priceField);
   });
 
@@ -70,23 +74,54 @@ const formValidate = () => {
     pristine.validate(priceField);
   });
 
-  timeinField.addEventListener('change', (e) => {
-    timeoutField.value = e.target.value;
+  timeinField.addEventListener('change', (evt) => {
+    timeoutField.value = evt.target.value;
   });
 
-  timeoutField.addEventListener('change', (e) => {
-    timeinField.value = e.target.value;
+  timeoutField.addEventListener('change', (evt) => {
+    timeinField.value = evt.target.value;
   });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(e.target);
+      const formData = new FormData(evt.target);
       sendAdvertisement(formData);
     }
   });
 };
 
 
-export { formValidate };
+const setFormState = (state) => {
+  switch (state) {
+    case 'active': {
+      form.classList.remove('.ad-form--disabled');
+      [...form.children].forEach((element) => {
+        element.removeAttribute('disabled');
+      });
+      slider.removeAttribute('disabled');
+      break;
+    }
+    case 'inactive': {
+      form.classList.add('.ad-form--disabled');
+      [...form.children].forEach((element) => {
+        element.setAttribute('disabled', true);
+      });
+      slider.setAttribute('disabled', true);
+      break;
+    }
+  }
+};
+
+const clearForm = () => {
+  form.reset();
+  priceField.setAttribute('value', MIN_PRICE['flat']);
+  addressField.setAttribute('value', `${ DEFAULT_CENTER.lat }, ${ DEFAULT_CENTER.lng }`);
+  slider.noUiSlider.set(MIN_PRICE['flat']);
+  avatarPreview.src = DEFAULT_AVATAR;
+  photoContainer.innerHTML = '';
+};
+
+
+export { formValidate, setFormState, clearForm };
