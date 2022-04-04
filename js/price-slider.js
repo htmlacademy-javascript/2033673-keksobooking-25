@@ -27,17 +27,17 @@ slider.noUiSlider.on('update', () => {
   priceField.value = slider.noUiSlider.get();
 });
 
-priceField.addEventListener('input', (e) => {
-  slider.noUiSlider.set(+e.target.value);
+priceField.addEventListener('input', (evt) => {
+  slider.noUiSlider.set(+evt.target.value);
 });
 
-typeField.addEventListener('change', (e) => {
+typeField.addEventListener('change', (evt) => {
   slider.noUiSlider.updateOptions({
     range: {
       min: LOW_PRICE,
       max: HIGH_PRICE
     },
-    start: MIN_PRICE[e.target.value],
+    start: MIN_PRICE[evt.target.value],
     step: 1,
   });
 });

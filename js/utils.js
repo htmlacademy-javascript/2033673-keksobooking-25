@@ -1,6 +1,10 @@
 import { getSettings } from './settings.js';
+import { clearForm } from './form.js';
+import { getElements } from './elements.js';
+import { clearFilters } from './filters.js';
 
 const { SIMILAR_ADVERTISEMENTS } = getSettings();
+const { resetButton } = getElements();
 
 const getRandomNumber = (begin, end, digits = 0) => {
 
@@ -46,7 +50,6 @@ const getRandomList = (array) => {
 
 const getAvatarImage = generateAvatar();
 
-
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
@@ -55,4 +58,13 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export { getRandomNumber, getAvatarImage, getRandomList, debounce };
+const isEscKey = (evt) => evt.key === 'Escape';
+
+const reset = () => {
+  resetButton.addEventListener('click', () => {
+    clearForm();
+    clearFilters();
+  });
+};
+
+export { getRandomNumber, getAvatarImage, getRandomList, debounce, isEscKey, reset };

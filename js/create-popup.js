@@ -7,10 +7,6 @@ const addTextContent = (element, text) => {
   element.textContent = text;
 };
 
-const addHTMLContent = (element, text) => {
-  element.innerHTML = `${ text } <span>\u{20BD}/ночь</span>`;
-};
-
 const addFeatures = (element, features) => {
   const featuresElementsList = [...element.children];
 
@@ -42,7 +38,7 @@ const addInfo = (parent, selector, info, func) => {
   }
 };
 
-const generateCardElement = (card) => {
+const createPopup = (card) => {
   const template = document.querySelector('#card').content.querySelector('.popup');
   const {
     author: { avatar },
@@ -51,7 +47,7 @@ const generateCardElement = (card) => {
   const cardElement = template.cloneNode(true);
   addInfo(cardElement, '.popup__title', title, addTextContent);
   addInfo(cardElement, '.popup__text--address', address, addTextContent);
-  addInfo(cardElement, '.popup__text--price', price, addHTMLContent);
+  addInfo(cardElement, '.popup__text--price', `${ price } \u{20BD}/ночь`, addTextContent);
   addInfo(cardElement, '.popup__type', `${ TYPES[type] }`, addTextContent);
   addInfo(cardElement, '.popup__text--capacity', `${ rooms } комнаты для ${ guests } гостей`, addTextContent);
   addInfo(cardElement, '.popup__text--time', `Заезд после ${ checkin }, выезд до ${ checkout }`, addTextContent);
@@ -64,4 +60,4 @@ const generateCardElement = (card) => {
 };
 
 
-export { generateCardElement };
+export { createPopup };

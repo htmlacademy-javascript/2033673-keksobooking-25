@@ -1,7 +1,9 @@
 const getElements = () => ({
   adForm: document.querySelector('.ad-form'),
   mapFilters: document.querySelector('.map__filters'),
-  priceSlider: document.querySelector('.ad-form__slider')
+  priceSlider: document.querySelector('.ad-form__slider'),
+  resetButton: document.querySelector('.ad-form__reset'),
+  submitButton: document.querySelector('.ad-form__submit'),
 });
 
 const getFormFields = () => ({

@@ -1,8 +1,10 @@
 import { getSettings } from './settings.js';
 import { onGetRequestError, onPostRequestError, onPostRequestSuccess } from './messages.js';
-import { clearFields } from './form-state.js';
+import { clearForm } from './form.js';
+import { getElements } from './elements.js';
 
 const { GET_DATA_SERVER, POST_DATA_SERVER } = getSettings();
+const { submitButton } = getElements();
 
 const getData = (onSuccess) => {
   fetch(GET_DATA_SERVER)
@@ -18,16 +20,20 @@ const getData = (onSuccess) => {
 };
 
 const sendAdvertisement = (formData) => {
+  submitButton.setAttribute('disabled', true);
   fetch(POST_DATA_SERVER, { method: 'POST', body: formData })
     .then((response) => {
       if (response.ok) {
         onPostRequestSuccess();
-        clearFields();
+        clearForm();
       } else {
         onPostRequestError();
       }
     })
-    .catch(() => onPostRequestError());
+    .catch(() => onPostRequestError())
+    .finally(() => {
+      submitButton.removeAttribute('disabled');
+    });
 };
 
 export { getData, sendAdvertisement };

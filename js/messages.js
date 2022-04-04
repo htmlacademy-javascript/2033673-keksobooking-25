@@ -1,3 +1,5 @@
+import { isEscKey } from './utils.js';
+
 const TIMEOUT = 3000;
 
 const onGetRequestError = (message) => {
@@ -11,21 +13,38 @@ const onGetRequestError = (message) => {
   }, TIMEOUT);
 };
 
+const onEscKeydown = (evt, message) => {
+  if (isEscKey(evt)) {
+    evt.preventDefault();
+    message.remove();
+    document.removeEventListener('keydown', onEscKeydown);
+  }
+};
+
 const onPostRequestSuccess = () => {
-  const message = document.querySelector('#success').content.querySelector('.success');
+  const successTemplate = document.querySelector('#success').content.querySelector('.success');
+  const message = successTemplate.cloneNode(true);
   document.body.appendChild(message);
 
   message.addEventListener('click', () => message.remove());
+  document.addEventListener('keydown', (evt) => {
+    onEscKeydown(evt, message);
+  });
 };
 
 const onPostRequestError = () => {
-  const message = document.querySelector('#error').content.querySelector('.error');
+  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  const message = errorTemplate.cloneNode(true);
   document.body.appendChild(message);
 
   message.addEventListener('click', () => message.remove());
 
   const closeButton = message.querySelector('.error__button');
   closeButton.addEventListener('click', () => message.remove());
+
+  document.addEventListener('keydown', (evt) => {
+    onEscKeydown(evt, message);
+  });
 };
 
 export { onGetRequestError, onPostRequestSuccess, onPostRequestError };
