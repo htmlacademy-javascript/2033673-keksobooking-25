@@ -53,17 +53,15 @@ const featuresCompare = (itemA, itemB) => {
   return rankB - rankA;
 };
 
-const getFilterAdvertisements = (advertisements) => {
-  return debounce(() => {
-    const filterAdvertisements = advertisements
-      .filter((item) => typeFilter(item, filters.type))
-      .filter((item) => priceFilter(item, filters.price))
-      .filter((item) => roomsFilter(item, filters.rooms))
-      .filter((item) => guestsFilter(item, filters.guests))
-      .sort(featuresCompare);
-    createMarkers(filterAdvertisements);
-  }, DELAY_TIMEOUT)();
-};
+const getFilterAdvertisements = (advertisements) => debounce(() => {
+  const filterAdvertisements = advertisements
+    .filter((item) => typeFilter(item, filters.type))
+    .filter((item) => priceFilter(item, filters.price))
+    .filter((item) => roomsFilter(item, filters.rooms))
+    .filter((item) => guestsFilter(item, filters.guests))
+    .sort(featuresCompare);
+  createMarkers(filterAdvertisements);
+}, DELAY_TIMEOUT)();
 
 const setFilters = (advertisements) => {
   mapFilters.addEventListener('change', (evt) => {
