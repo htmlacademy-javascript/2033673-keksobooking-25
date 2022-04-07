@@ -57,6 +57,11 @@ const getSettings = () => ({
   IMAGE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
   DEFAULT_STATE: 'inactive',
   WORK_STATE: 'active',
+  MAX_ROOMS: 100,
+  ANY_LEVEL_PRICE: 'any',
+  LOW_LEVEL_PRICE: 'low',
+  MIDDLE_LEVEL_PRICE: 'middle',
+  HIGH_LEVEL_PRICE: 'high',
 });
 
 export { getSettings };

@@ -13,7 +13,6 @@ const cityMap = L.map('map-canvas')
   .on('load', () => {
     addressField.value = `${ DEFAULT_CENTER.lat }, ${ DEFAULT_CENTER.lng }`;
     setFormState(WORK_STATE);
-    setFiltersState(WORK_STATE);
   })
   .setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 
