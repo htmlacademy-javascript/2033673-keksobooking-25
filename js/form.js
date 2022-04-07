@@ -4,7 +4,7 @@ import { sendAdvertisement } from './server-requests.js';
 
 
 const { adForm: form, priceSlider: slider } = getElements();
-const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_AVATAR } = getSettings();
+const { MIN_PRICE, DEFAULT_CENTER, DEFAULT_AVATAR, MAX_ROOMS } = getSettings();
 const {
   capacityField,
   roomsField,
@@ -17,21 +17,15 @@ const {
   photoContainer
 } = getFormFields();
 
-const checkCapacity = (capacity, rooms) => {
-  if (rooms === 100) {
-    return capacity === 0;
-  } else {
-    return (capacity <= rooms && capacity > 0);
-  }
-};
+const checkCapacity = (capacity, rooms) =>
+  (rooms === MAX_ROOMS) ?
+    capacity === 0 :
+    (capacity <= rooms && capacity > 0);
 
-const getCapacityErrorMessage = (capacity, rooms) => {
-  if (rooms === 100 && capacity !== 0) {
-    return 'Слишком много комнат для гостей';
-  } else {
-    return 'Количество гостей больше количества комнат';
-  }
-};
+const getCapacityErrorMessage = (capacity, rooms) =>
+  (rooms === MAX_ROOMS && capacity !== 0) ?
+    'Слишком много комнат для гостей' :
+    'Количество гостей больше количества комнат';
 
 const checkPrice = (price, type) => price >= MIN_PRICE[type];
 
@@ -40,7 +34,6 @@ const getPriceErrorMessage = (price, type) => {
     return 'Меньше минимального значения';
   }
 };
-
 
 const formValidate = () => {
   const pristine = new Pristine(form, {

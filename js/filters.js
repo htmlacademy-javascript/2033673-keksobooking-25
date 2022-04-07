@@ -1,81 +1,79 @@
-import { getElements } from './elements.js';
+import { getElements, getMapFilters } from './elements.js';
 import { createMarkers } from './markers.js';
 import { cityMap, mainMarker } from './map.js';
 import { debounce } from './utils.js';
 import { getSettings } from './settings.js';
 
 const { mapFilters } = getElements();
-const { DELAY_TIMEOUT, CHEAP_PRICE, MIDDLE_PRICE, DEFAULT_CENTER, DEFAULT_ZOOM } = getSettings();
+const {
+  DELAY_TIMEOUT,
+  CHEAP_PRICE,
+  MIDDLE_PRICE,
+  DEFAULT_CENTER,
+  DEFAULT_ZOOM,
+  ANY_LEVEL_PRICE,
+  LOW_LEVEL_PRICE,
+  MIDDLE_LEVEL_PRICE,
+  HIGH_LEVEL_PRICE
+} = getSettings();
 
-const filters = {
-  type: 'any',
-  price: 'any',
-  rooms: 'any',
-  guests: 'any',
-};
+const { typeFilter, priceFilter, roomsFilter, guestsFilter, featureFilters } = getMapFilters();
 
-const typeFilter = (item, type) => item.offer.type === type || type === 'any';
+const applyMapFilters = (item) => {
+  const filterValues = {
+    type: typeFilter.value,
+    price: priceFilter.value,
+    rooms: roomsFilter.value,
+    guests: guestsFilter.value,
+    features: featureFilters.filter((filter) => filter.checked),
+  };
 
-const priceFilter = (item, priceLevel) => {
-  switch (priceLevel) {
-    case 'any':
-      return true;
-    case 'middle':
-      return item.offer.price >= CHEAP_PRICE && item.offer.price <= MIDDLE_PRICE;
-    case 'low':
-      return item.offer.price < CHEAP_PRICE;
-    case 'high':
-      return item.offer.price > MIDDLE_PRICE;
-  }
-};
-
-const roomsFilter = (item, rooms) => item.offer.rooms === +rooms || rooms === 'any';
-
-const guestsFilter = (item, guests) => item.offer.guests === +guests || guests === 'any';
-
-const getRank = (item) => {
-  const featureFilters = [...document.querySelectorAll('.map__checkbox')];
-  const features = featureFilters.filter((filter) => filter.checked);
-  let rank = 0;
-  if (item.offer.features) {
-    features.forEach((feature) => {
-      if (item.offer.features.includes(feature.value)) {
-        rank++;
+  return Object.keys(filterValues).every((filter) => {
+    if (filter === 'type') {
+      return item.offer.type === filterValues.type || filterValues.type === 'any';
+    }
+    if (filter === 'price') {
+      switch (filterValues.price) {
+        case ANY_LEVEL_PRICE:
+          return true;
+        case MIDDLE_LEVEL_PRICE:
+          return item.offer.price >= CHEAP_PRICE && item.offer.price <= MIDDLE_PRICE;
+        case LOW_LEVEL_PRICE:
+          return item.offer.price < CHEAP_PRICE;
+        case HIGH_LEVEL_PRICE:
+          return item.offer.price > MIDDLE_PRICE;
       }
-    });
-  }
-  return rank;
-};
-
-const featuresCompare = (itemA, itemB) => {
-  const rankA = getRank(itemA);
-  const rankB = getRank(itemB);
-  return rankB - rankA;
+    }
+    if (filter === 'rooms') {
+      return item.offer.rooms === +filterValues.rooms || filterValues.rooms === 'any';
+    }
+    if (filter === 'guests') {
+      return item.offer.guests === +filterValues.guests || filterValues.guests === 'any';
+    }
+    if (filter === 'features') {
+      if (filterValues.features.length === 0) {
+        return true;
+      }
+      if (item.offer.features) {
+        return filterValues.features.every((feature) => item.offer.features.includes(feature.value));
+      }
+    }
+  });
 };
 
 const getFilterAdvertisements = (advertisements) => debounce(() => {
-  const filterAdvertisements = advertisements
-    .filter((item) => typeFilter(item, filters.type))
-    .filter((item) => priceFilter(item, filters.price))
-    .filter((item) => roomsFilter(item, filters.rooms))
-    .filter((item) => guestsFilter(item, filters.guests))
-    .sort(featuresCompare);
+  const filterAdvertisements = advertisements.filter((item) => applyMapFilters(item));
   createMarkers(filterAdvertisements);
 }, DELAY_TIMEOUT)();
 
 const setFilters = (advertisements) => {
-  mapFilters.addEventListener('change', (evt) => {
+  mapFilters.addEventListener('change', () => {
     cityMap.closePopup();
-    filters[evt.target.dataset.filter] = evt.target.value;
     getFilterAdvertisements(advertisements);
   });
 
   mapFilters.addEventListener('reset', () => {
-    Object.keys(filters).forEach((key) => {
-      filters[key] = 'any';
-    });
     getFilterAdvertisements(advertisements);
-
   });
 };
 
@@ -103,7 +101,6 @@ const clearFilters = () => {
   cityMap.closePopup();
   cityMap.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
   mainMarker.setLatLng(DEFAULT_CENTER);
-
 };
 
 export { setFilters, setFiltersState, clearFilters };

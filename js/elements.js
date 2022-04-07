@@ -23,4 +23,12 @@ const getFormFields = () => ({
   photoContainer: document.querySelector('.ad-form__photo'),
 });
 
-export { getElements, getFormFields };
+const getMapFilters = () => ({
+  typeFilter: document.querySelector('#housing-type'),
+  priceFilter: document.querySelector('#housing-price'),
+  roomsFilter: document.querySelector('#housing-rooms'),
+  guestsFilter: document.querySelector('#housing-guests'),
+  featureFilters: [...document.querySelectorAll('.map__checkbox')],
+});
+
+export { getElements, getFormFields, getMapFilters };
